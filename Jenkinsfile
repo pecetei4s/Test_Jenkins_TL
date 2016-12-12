@@ -1,7 +1,10 @@
 node(){
 
 stage "Build Docker"  
-
+  docker.withServer('tcp://10.23.100.245:2375'){
+    
+docker.image('kmadel/maven:3.3.3-jdk-8')  
+  }
   
 stage "Static Analysis Docker"
   def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"repository": "mongo"}', url: ' http://10.23.100.245:8090/api/twistlock/reportHtml'
