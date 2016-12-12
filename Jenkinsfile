@@ -1,8 +1,13 @@
 node(){
 
+
 stage "Build Docker"  
-  httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501',consoleLogResponseBody: true, httpMode: 'POST', url: 'http://10.23.100.245:2375/images/create?fromImage=busybox&tag=latest'
-  
+    httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501',consoleLogResponseBody: true, httpMode: 'POST', url: 'http://10.23.100.245:2375/images/create?fromImage=busybox&tag=latest'
+
+stage "Run Container"  
+  httpRequest acceptType: 'APPLICATION_JSON', requestBody: '{"Image": "armadillo-standalone-alpine:2.2.2"}',contentType: 'APPLICATION_JSON',validResponseCodes: '100:501',consoleLogResponseBody: true, httpMode: 'POST', url: 'http://10.23.100.245:2375/containers/create?name=Armadillo'
+  httpRequest acceptType: 'APPLICATION_JSON',contentType: 'APPLICATION_JSON',validResponseCodes: '100:501',consoleLogResponseBody: true, httpMode: 'POST', url: 'http://10.23.100.245:2375/containers/Armadillo/start?name=Armadillo'
+
 stage "Static Analysis Docker"
   def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"repository": "mongo"}', url: ' http://10.23.100.245:8090/api/twistlock/reportHtml'
   writeFile file: 'report.html', text: response.content
