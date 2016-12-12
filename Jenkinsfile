@@ -1,9 +1,10 @@
 node(){
 
 stage "Build Docker"  
-  docker.withServer('tcp://10.23.100.245:2375'){
-     sh "docker pull jenkins"
-  }
+  docker.withServer('tcp://10.23.100.245:2375')
+  def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"fromImage": "busybox","tag":"latest"}', url: 'http://10.23.100.245:2375/images/create'
+
+  
   
 stage "Static Analysis Docker"
   def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"repository": "mongo"}', url: ' http://10.23.100.245:8090/api/twistlock/reportHtml'
