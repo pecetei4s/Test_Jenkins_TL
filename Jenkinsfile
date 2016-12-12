@@ -1,10 +1,9 @@
 node(){
-withDockerServer([uri: 'tcp://10.23.100.245:2375']) {
 
 stage "Build Docker"  
-   docker.build("elasticsearch")
- 
- 
+   System.setProperty("docker.host", "10.23.100.245")
+   def info = dockerClient.info().content
+  
 stage "Static Analysis Docker"
   def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"repository": "mongo"}', url: ' http://10.23.100.245:8090/api/twistlock/reportHtml'
   writeFile file: 'report.html', text: response.content
@@ -18,4 +17,4 @@ stage "Report Twistlock"
   publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '', reportFiles: 'reportContainer.html', reportName: 'Report TwistLock Dynamic'])
 
 }
-} 
+ 
