@@ -18,4 +18,4 @@ stage "Report Twistlock"
   publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: '', reportFiles: 'reportContainer.html', reportName: 'Report TwistLock Dynamic'])
 
 }
-}
+} 
