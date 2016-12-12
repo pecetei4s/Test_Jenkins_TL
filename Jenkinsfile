@@ -9,11 +9,11 @@ stage "Run Container"
   httpRequest acceptType: 'APPLICATION_JSON',contentType: 'APPLICATION_JSON',validResponseCodes: '100:501',consoleLogResponseBody: true, httpMode: 'POST', url: 'http://10.23.100.245:2375/containers/Armadillo/start?name=Armadillo'
 
 stage "Static Analysis Docker"
-  def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"repository": "mongo"}', url: ' http://10.23.100.245:8090/api/twistlock/reportHtml'
+  def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"repository": "armadillo-standalone-alpine:2.2.2"}', url: ' http://10.23.100.245:8090/api/twistlock/reportHtml'
   writeFile file: 'report.html', text: response.content
 
 stage "Dynamic Analysis Docker"
-  def response1 = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"container": "/reverent_colden"}', url: ' http://10.23.100.245:8090/api/twistlock/reportContainer'
+  def response1 = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"container": "/Armadillo"}', url: ' http://10.23.100.245:8090/api/twistlock/reportContainer'
   writeFile file: 'reportContainer.html', text: response1.content
 
 stage "Report Twistlock"
