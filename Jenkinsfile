@@ -1,7 +1,7 @@
 node(){
 
 stage "Build Docker"  
-  httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501',consoleLogResponseBody: true, httpMode: 'POST', requestBody: '{"fromImage": "busybox","tag":"latest"}', url: 'http://10.23.100.245:2375/images/create'
+  httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501',consoleLogResponseBody: true, httpMode: 'POST', requestBody: '{"fromImage": "busybox","tag":"latest"}', url: 'http://10.23.100.245:2375/images/create?fromImage=busybox&tag=latest'
   
 stage "Static Analysis Docker"
   def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"repository": "mongo"}', url: ' http://10.23.100.245:8090/api/twistlock/reportHtml'
