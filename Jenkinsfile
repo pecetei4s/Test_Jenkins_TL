@@ -2,6 +2,7 @@ node(){
 
 stage "Build Docker"  
 withDockerServer([uri: 'tcp://10.23.100.245:2375']) {
+   docker.build("elasticsearch")
    
 } 
 stage "Static Analysis Docker"
