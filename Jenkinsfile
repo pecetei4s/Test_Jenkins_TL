@@ -2,8 +2,7 @@ node(){
 
 stage "Build Docker"  
   docker.withServer('tcp://10.23.100.245:2375'){
-    
-docker.image('kmadel/maven:3.3.3-jdk-8')  
+     sh "docker pull jenkins"
   }
   
 stage "Static Analysis Docker"
