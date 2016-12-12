@@ -1,9 +1,7 @@
 node(){
-  env.DOCKER_IMAGE_NAME = "secdevops/bad-dockerfile"
-  env.DOCKER_IMAGE_TAG = "test"
 
 stage "Build Docker"  
- sh "docker build --no-cache -t ${env.DOCKER_IMAGE_NAME}:${env.DOCKER_IMAGE_TAG} ${env.WORKSPACE}/."
+  docker.build('jenkins')
  
 stage "Static Analysis Docker"
   def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"repository": "mongo"}', url: ' http://10.23.100.245:8090/api/twistlock/reportHtml'
