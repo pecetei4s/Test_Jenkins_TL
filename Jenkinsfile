@@ -6,7 +6,7 @@ stage "Build Docker"
 
 stage "Run Container"  
   httpRequest acceptType: 'APPLICATION_JSON', requestBody: '{"Image": "localhost:5000/armadillo-standalone-alpine:2.2.2"}',contentType: 'APPLICATION_JSON',validResponseCodes: '100:501',consoleLogResponseBody: true, httpMode: 'POST', url: 'http://10.23.100.245:2375/containers/create?name=Armadillo1'
-  httpRequest acceptType: 'APPLICATION_JSON',contentType: 'APPLICATION_JSON',validResponseCodes: '100:501',consoleLogResponseBody: true, httpMode: 'POST', url: 'http://10.23.100.245:2375/containers/Armadillo/start?name=Armadillo1'
+  httpRequest acceptType: 'APPLICATION_JSON',contentType: 'APPLICATION_JSON',validResponseCodes: '100:501',consoleLogResponseBody: true, httpMode: 'POST', url: 'http://10.23.100.245:2375/containers/Armadillo1/start?name=Armadillo1'
 
 stage "Static Analysis Docker"
   def response = httpRequest acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON',validResponseCodes: '100:501', httpMode: 'POST', requestBody: '{"repository": "armadillo-standalone-alpine:2.2.2"}', url: ' http://10.23.100.245:8090/api/twistlock/reportHtml'
